@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    /* CSS CŨ TỪ PROFILE.HTML */
+    .profile-container {
+        /* Đã được thay thế bằng .profile-wrapper */
+        /* Giữ lại các style cơ bản cho input/label */
+        max-width: 100%; /* Đổi thành 100% để phù hợp với bố cục 2 cột */
+        margin: 0;
+        background: none;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    h2 {
+        text-align: left; /* Chỉnh lại H2 cho khu vực nội dung */
+        color: #b30000;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #b30000; /* Thêm gạch chân dưới tiêu đề */
+        padding-bottom: 10px;
+    }
+
+    /* Thêm CSS cho bố cục chính */
+    .profile-layout {
+        display: flex;
+        max-width: 1100px; /* Độ rộng tối đa cho layout */
+        /* THAY ĐỔI TẠI ĐÂY: Giữ padding-top để tránh navbar */
+        margin: 0 auto; /* Xóa margin-top cũ */
+        padding: 80px 15px 50px 15px; /* Giữ padding-top 80px */
+        gap: 30px;
+    }
+
+    /* CSS cho Sidebar */
+    .profile-sidebar {
+        flex: 0 0 250px; /* Độ rộng cố định cho sidebar */
+        max-width: 250px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    /* CSS cho Nội dung */
+    .profile-content {
+        flex-grow: 1;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 30px;
+    }
+
+    /* Style cho Menu Sidebar */
+    /* XÓA QUY TẮC menu-header */
+
+    .sidebar-nav a {
+        display: block;
+        padding: 15px;
+        text-decoration: none;
+        color: #222222;
+        font-weight: bold;
+        border-bottom: 1px solid #f0f0f0;
+        transition: background-color 0.3s, color 0.3s;
+        text-transform: uppercase;
+        font-size: 14px;
+        background-color: white; /* Đảm bảo nền của các mục là trắng */
+    }
+
+    .sidebar-nav a:last-child {
+        border-bottom: none;
+    }
+
+    .sidebar-nav a.active {
+        background-color: #b30000; /* Màu đỏ nổi bật cho mục đang chọn */
+        color: white;
+    }
+
+    .sidebar-nav a:hover:not(.active) {
+        background-color: #f0f0f0;
+    }
+
+    /* === CĂN CHỈNH FORM NỘI DUNG CHÍNH (KEY CHANGE) === */
+    .profile-group {
+        margin-bottom: 15px;
+        display: flex; /* Dùng Flexbox */
+        align-items: center;
+        gap: 20px;
+    }
+
+    .profile-group label {
+        flex: 0 0 150px; /* Độ rộng cố định cho Label */
+        max-width: 150px;
+        margin-bottom: 0; /* Xóa margin dưới Label */
+    }
+
+    .profile-group input[type="text"],
+    .profile-group input[type="email"],
+    .profile-group select {
+        flex-grow: 1; /* Cho phép Input/Select chiếm phần còn lại */
+        padding: 10px;
+        background-color: #f8f8f8; /* Nền xám nhẹ cho ô readonly */
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .gender-options {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        flex-grow: 1;
+    }
+
+    .btn-edit {
+        width: 100%;
+        background-color: #b30000;
+        color: white;
+        border: none;
+        padding: 12px;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 20px;
+        text-transform: uppercase;
+    }
+
+    /* Responsive cho mobile */
+    @media (max-width: 768px) {
+        .profile-layout {
+            flex-direction: column;
+            margin: 20px 10px;
+            gap: 20px;
+            padding-top: 80px; /* Giữ padding trên mobile */
+        }
+        .profile-sidebar {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+        .profile-group {
+            flex-direction: column; /* Trên mobile, xếp Label và Input dọc */
+            align-items: flex-start;
+        }
+        .profile-group label {
+             flex: 0 0 auto;
+             max-width: none;
+             width: 100%;
+        }
+        .profile-group input[type="text"],
+        .profile-group input[type="email"],
+        .profile-group select {
+             width: 100%;
+        }
+    }
+</style>
+
+<div class="profile-layout">
+
+    <!-- THANH BÊN (SIDEBAR) -->
+    <div class="profile-sidebar">
+        <!-- XÓA DIV menu-header -->
+        <nav class="sidebar-nav">
+            <!-- Thông tin cá nhân (Active) -->
+            <a href="{% url 'profile' %}" class="active">THÔNG TIN CÁ NHÂN</a>
+            <!-- Lịch Hẹn -->
+            <a href=>LỊCH HẸN</a>
+            <!-- Khiếu Nại -->
+            <a href=>KHIẾU NẠI</a>
+        </nav>
+    </div>
+
+    <!-- NỘI DUNG CHÍNH (THÔNG TIN CÁ NHÂN) -->
+    <div class="profile-content">
+        <div class="profile-container">
+            <h2>Thông tin tài khoản của bạn</h2>
+
+            <div class="profile-group">
+                <label>Tên đăng nhập (Username):</label>
+                <input type="text" value="{{ profile.user.username }}" readonly>
+            </div>
+            <div class="profile-group">
+                <label>Họ và tên:</label>
+                <input type="text" value="{{ profile.name }}" readonly>
+            </div>
+
+            <div class="profile-group">
+                <label>Email:</label>
+                <input type="email" value="{{ profile.email }}" readonly>
+            </div>
+
+            <div class="profile-group">
+                <label>Số điện thoại:</label>
+                <input type="text" value="{{ profile.phone }}" readonly>
+            </div>
+
+            <div class="profile-group">
+                <label>Địa chỉ:</label>
+                <input type="text" value="{{ profile.address }}" readonly>
+            </div>
+
+            <div class="profile-group">
+                <label>Giới tính:</label>
+                <div class="gender-options">
+                    <label><input type="radio" name="gender" {% if profile.gender == 'Nam' %}checked{% endif %} disabled> Nam</label>
+                    <label><input type="radio" name="gender" {% if profile.gender == 'Nữ' %}checked{% endif %} disabled> Nữ</label>
+                </div>
+            </div>
+
+            <div class="profile-group">
+                <label>Gói tập đăng ký:</label>
+                <select disabled>
+                    <option value="">Không có</option>
+                    <option value="Gold" {% if profile.membership == 'Gold' %}selected{% endif %}>Gold</option>
+                    <option value="Diamond" {% if profile.membership == 'Diamond' %}selected{% endif %}>Diamond</option>
+                    <option value="VIP" {% if profile.membership == 'VIP' %}selected{% endif %}>VIP</option>
+                </select>
+            </div>
+
+            <form action="{% url 'edit_profile' %}">
+                <button type="submit" class="btn-edit">Sửa thông tin</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+   <title>{% block title %}GymX - Phòng Tập Chất Lượng Nhất Việt Nam{% endblock title %}</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+   <style>
+       .custom-navbar {
+           border-bottom: 1px solid #eee; min-height: 60px; padding-top: 0; padding-bottom: 0;
+           display: flex; align-items: center;
+       }
+       .custom-logo { height: 60px; width: auto; transition: height 0.3s; }
+       .custom-navbar .navbar-nav {
+           width: 70%; display: flex; justify-content: space-evenly;
+           margin-right: auto !important; margin-left: auto !important;
+       }
+       .custom-navbar .nav-link { font-weight: 500; font-size: 1.05rem; }
+       .btn-outline-red {
+           background-color: black; color: white; border: 2px solid black; padding: 10px 20px;
+           border-radius: 50px; text-transform: uppercase; transition: all 0.3s ease;
+       }
+       .btn-outline-red:hover { background-color: white; color: black; }
+       .custom-navbar .navbar-nav .nav-item .nav-link:hover {
+           color: black !important; background-color: transparent !important;
+       }
+       /* Trong khối <style> của base.html */
+
+
+   </style>
+   {% block extra_css %}{% endblock extra_css %}
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg fixed-top custom-navbar" style="background-color: #c11325;">
+   {% block header %}
+   <div class="container">
+       <a class="navbar-brand" href="{% url 'home' %}">
+           <img src="{% static 'images/gymx_logo6.png' %}" alt="GymX Logo" class="custom-logo" >
+       </a>
+       <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+           <span class="navbar-toggler-icon"></span>
+       </button>
+
+
+       <div class="collapse navbar-collapse" id="navbarMenu">
+           <ul class="navbar-nav ms-auto">
+               <li class="nav-item"><a class="nav-link text-light" href="{% url 'home' %}">TRANG CHỦ</a></li>
+               <li class="nav-item"><a class="nav-link text-light" href="#service">DỊCH VỤ</a></li>
+               <li class="nav-item"><a class="nav-link text-light" href="#about">GÓI HỘI VIÊN</a></li>
+               <li class="nav-item"><a class="nav-link text-light" href="#schedule">ĐẶT LỊCH</a></li>
+               <li class="nav-item"><a class="nav-link text-light" href="#contact">KHIẾU NẠI</a></li>
+           </ul>
+           <a href="#" class="nav-link me-3"><i class="ri-shopping-cart-line" style="font-size: 1.5rem;"></i></a>
+           {% if user.is_authenticated %}
+                <a class="btn btn-outline-red me-3" href="{% url 'profile' %}"
+                   style="padding: 5px 15px; background-color: #000000; color: #fff; border: 2px solid #000000; margin-right: 5px;">
+                     Xin chào, {{ user.username }}
+                </a>
+                <a class="btn btn-outline-red" href="{% url 'logout' %}"
+                   style="padding: 5px 15px; background-color: #b30000; color: #fff; border: 2px solid #b30000;">
+                   Đăng Xuất
+                </a>
+            {% else %}
+                <a class="btn btn-outline-red me-3" href="{% url 'login' %}">Đăng Nhập</a>
+            {% endif %}
+
+       </div>
+   </div>
+   {% endblock header %}
+</nav>
+<main>
+   {% block content %}
+   {% endblock content %}
+</main>
+
+
+<section class="contact" id="contact" style="background-color: #222222; padding: 60px 0;">
+    {% block footer %}
+     <div class="container">
+        <div class="content" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+
+            <div class="box text wow slideInLeft" style="flex: 0 0 30%; max-width: 30%; padding: 15px;">
+                <h2 style="color: white; margin-bottom: 25px; font-size: 1.5rem;">GYMX FITNESS</h2>
+                <div class="info" style="color: white; font-size: 15px; font-family: 'Open-sans', sans-serif;">
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 10px;"><span class="fa fa-phone" ></span> 1900 633 638</li>
+                        <li style="margin-bottom: 10px;"><span class="fa fa-map-marker" style="color: #c11325; margin-right: 10px;"></span> 52 Thành Thái, Phường Hoà Hưng, Thành phố Hồ Chí Minh</li>
+                        <li style="margin-bottom: 10px;"><span class="fa fa-clock-o" style="color: #c11325; margin-right: 10px;"></span> Mở cửa 24/7 </li>
+                        <li style="margin-bottom: 10px;"><span class="fa fa-envelope" style="color: #c11325; margin-right: 10px;"></span> info@gymx.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="box menu-links wow bounceInUp" style="flex: 0 0 30%; max-width: 30%; padding: 15px;">
+                <h2 style="color: white; margin-bottom: 25px; font-size: 1.5rem;">MENU </h2>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 10px;"><a href="{% url 'home' %}" style="color: white; text-decoration: none;">Trang Chủ</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#service" style="color: white; text-decoration: none;">Dịch Vụ </a></li>
+                    <li style="margin-bottom: 10px;"><a href="/dat-lich/" style="color: white; text-decoration: none;"Đặt Lịch</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/goi-hoi-vien/" style="color: white; text-decoration: none;">Gói Hội Viên</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/khieu-nai/" style="color: white; text-decoration: none;">Khiếu Nại</a></li>
+                </ul>
+            </div>
+
+            <div class="box social-area wow slideInRight" style="flex: 0 0 30%; max-width: 30%; padding: 15px; text-align: center;">
+                <h2 style="color: white; margin-bottom: 25px; font-size: 1.5rem;">MẠNG XÃ HỘI</h2>
+
+                <div class="social footer-social-icons">
+                     <a href=""><span class="fa fa-facebook"></span></a>
+                     <a href=""><span class="fa fa-linkedin"></span></a>
+                     <a href=""><span class="fa fa-skype"></span></a>
+                     <a href=""><span class="fa fa-youtube-play"></span></a>
+
+                </div>
+
+                <div class="copy" style="color: #c5c5c5; font-size: 14px; padding-top: 20px; border-top: 1px solid #333333;">
+                    PowerBy &copy; GymX
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    {% endblock footer %}
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/wow.min.js' %}"></script>
+
+
+<script>
+   $(document).ready(function(){
+
+
+     // Xử lý Accordion của template cũ
+     $(".accordian-container").click(function(){
+       $(".accordian-container").children(".body").slideUp();
+       $(".accordian-container").removeClass("active")
+       $(".accordian-container").children(".head").children("span").removeClass("fa-angle-down").addClass("fa-angle-up")
+       $(this).children(".body").slideDown();
+       $(this).addClass("active")
+       $(this).children(".head").children("span").removeClass("fa-angle-up").addClass("fa-angle-down")
+     })
+
+
+     // Xử lý cuộn mượt (smooth scroll) của template cũ
+      $(".go-down").click(function(event){
+        if(this.hash !== ""){
+             event.preventDefault();
+             var hash=this.hash;
+             $('html,body').animate({
+               scrollTop:$(hash).offset().top
+             },800 , function(){
+                window.location.hash=hash;
+             });
+        }
+     })
+   })
+
+
+   // Khởi tạo WOW.js
+   wow = new WOW({
+       animateClass: 'animated',
+       offset: 0,
+   });
+   wow.init();
+</script>
+{% block extra_js %}{% endblock extra_js %}
+</body>
+</html>

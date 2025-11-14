@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .edit-container {
+        max-width: 600px;
+        margin: 50px auto;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 30px;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    h2 {
+        text-align: center;
+        color: #b30000;
+        margin-bottom: 25px;
+    }
+
+    .edit-container form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus {
+        border-color: #b30000;
+        outline: none;
+    }
+
+    .gender-options {
+        display: flex;
+        gap: 20px;
+    }
+
+    .btn-save {
+        background-color: #b30000;
+        color: white;
+        border: none;
+        padding: 12px;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn-save:hover {
+        background-color: #8c0000;
+    }
+
+    .back-link {
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .back-link a {
+        color: #b30000;
+        text-decoration: none;
+        font-weight: bold;
+    }
+</style>
+
+<div class="edit-container">
+    <h2>Chỉnh sửa thông tin tài khoản</h2>
+
+    <form method="post">
+        {% csrf_token %}  <!-- CSRF TOKEN đặt đúng vị trí -->
+
+        <div class="profile-group">
+            <label>Tên đăng nhập (Username):</label>
+            <input type="text" value="{{ profile.user.username }}" readonly style="background-color: #f0f0f0;">
+        </div>
+
+        <label for="{{ form.name.id_for_label }}">Họ và tên:</label>
+        {{ form.name }}
+
+        <label for="{{ form.email.id_for_label }}">Email:</label>
+        {{ form.email }}
+
+        <label for="{{ form.phone.id_for_label }}">Số điện thoại:</label>
+        {{ form.phone }}
+
+        <label for="{{ form.address.id_for_label }}">Địa chỉ:</label>
+        {{ form.address }}
+
+        <label>Giới tính:</label>
+        {{ form.gender }}
+
+        <label for="{{ form.membership.id_for_label }}">Gói hội viên:</label>
+        {{ form.membership }}
+
+        <button type="submit" class="btn-save">Lưu thay đổi</button>
+    </form> <!-- Đóng Form ở đây -->
+
+    <div class="back-link">
+        <a href="{% url 'profile' %}">← Quay lại trang thông tin</a>
+    </div>
+</div>
+
+<script>
+    // Mã JavaScript để vô hiệu hóa trường Membership
+    document.addEventListener('DOMContentLoaded', function() {
+        const membershipField = document.getElementById('id_membership');
+        if (membershipField) {
+            membershipField.readOnly = true;
+            membershipField.style.pointerEvents = 'none';
+            membershipField.style.backgroundColor = '#f0f0f0';
+        }
+    });
+</script>
+{% endblock %}

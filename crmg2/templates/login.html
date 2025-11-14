@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Đăng Nhập - GymX Fitness Club{% endblock title %}
+
+{% block content %}
+<section class="contact" style="padding-top: 100px; padding-bottom: 80px;">
+    <div class="container">
+        <div class="content" style="justify-content: center;">
+            <div class="box form wow slideInLeft" style="flex: 0 0 50%; max-width: 50%;">
+                <h2 style="color: #c11325; margin-bottom: 20px;">Đăng Nhập</h2>
+                <p style="color: #ffffff; margin-bottom: 30px; font-family: 'Open-sans', sans-serif;">
+                    Chào mừng bạn trở lại với GymX.
+                </p>
+               <form method="POST">
+                   {% csrf_token %}
+                   
+                   {% for field in form %}
+                        <div style="margin-bottom: 25px;">
+                            <input type="{{ field.field.widget.input_type }}" 
+                                   placeholder="{{ field.label }}" 
+                                   name="{{ field.name }}" 
+                                   id="{{ field.id_for_label }}"
+                                   class="form-control" 
+                                   style="height: 45px; background-color: transparent; border:1px solid #ffffff; font-family: 'Open-sans',sans-serif; color:#ffffff;"
+                                   required
+                            >
+                            {% for error in field.errors %}
+                                <p style="color: yellow; font-size: 0.9rem; margin-top: 5px;">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                   {% endfor %}
+                   
+                   <button type="submit" style="width: 100%;">Đăng Nhập</button>
+               </form>
+               <p style="color: #ffffff; text-align: center; margin-top: 20px; font-family: 'Open-sans', sans-serif;">
+                   Chưa có tài khoản? <a href="{% url 'register' %}" style="color: #c11325; text-decoration: underline;">Đăng ký ngay</a>
+               </p>
+            </div>
+        </div>
+     </div>
+</section>
+{% endblock content %}
